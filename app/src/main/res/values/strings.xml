@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">WeatherForecast</string>
+    <string name="map_activity">Add new location</string>
+    <string name="service_not_available" />
+    <string name="invalid_lat_long_used" />
+    <string name="no_address_found" />
+    <string name="address_found" />
+    <string name="main_activity">Prometheus</string>
 </resources>
