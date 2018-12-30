@@ -1,4 +1,4 @@
-package com.github.rchugunov.weather
+package com.github.sharetaxi
 
 import android.content.Context
 import androidx.lifecycle.ViewModel
@@ -8,7 +8,12 @@ class ViewModelFactory(context: Context) : ViewModelProvider.Factory {
 
     private val service = RetrofitClient.forecastsService
     private val datasource = ForecastsWebDatasource(service)
-    private val localPrefs = LocalPrefs.Impl(context.getSharedPreferences(PREFS_KEY, Context.MODE_PRIVATE))
+    private val localPrefs = LocalPrefs.Impl(
+        context.getSharedPreferences(
+            PREFS_KEY,
+            Context.MODE_PRIVATE
+        )
+    )
     private val repository = ForecastRepository(datasource, localPrefs)
 
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {

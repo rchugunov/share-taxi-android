@@ -15,20 +15,30 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
     }
     dataBinding {
         enabled = true
     }
     buildTypes {
+        Properties properties = new Properties()
+        properties.load(project.rootProject.file('local.properties').newDataInputStream())
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+            resValue "string", "facebook_app_id", properties.getProperty('facebook_app_id')
+            resValue "string", "fb_login_protocol_scheme", properties.getProperty('fb_login_protocol_scheme')
+        }
+
+        debug {
+            resValue "string", "facebook_app_id", properties.getProperty('facebook_app_id')
+            resValue "string", "fb_login_protocol_scheme", properties.getProperty('fb_login_protocol_scheme')
         }
     }
 }
 
 dependencies {
-    implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation 'com.android.support:multidex:1.0.3'
     implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     //appcompat
     implementation "androidx.appcompat:appcompat:1.1.0-alpha01"
@@ -54,4 +64,7 @@ dependencies {
     testImplementation "junit:junit:4.12"
     androidTestImplementation "androidx.test:runner:1.1.1"
     androidTestImplementation "androidx.test.espresso:espresso-core:3.1.1"
+
+    //social
+    implementation 'com.facebook.android:facebook-login:[4,5)'
 }

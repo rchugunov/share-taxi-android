@@ -1,4 +1,4 @@
-package com.github.rchugunov.weather
+package com.github.sharetaxi
 
 import android.app.Activity
 import android.content.Intent
@@ -17,14 +17,21 @@ class MainActivity : AppCompatActivity() {
 
     private val btnAdd by lazy { findViewById<FloatingActionButton>(R.id.btn_add) }
     private val rvList by lazy { findViewById<EpoxyRecyclerView>(R.id.rv_forecast_data) }
-    private val vm by lazy { ViewModelProviders.of(this, ViewModelFactory(this)).get(ForecastsViewModel::class.java) }
+    private val vm by lazy { ViewModelProviders.of(this,
+        ViewModelFactory(this)
+    ).get(ForecastsViewModel::class.java) }
     private val controller = ForecastsEpoxyController()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        btnAdd.setOnClickListener { MapActivity.startForResult(this, Constants.REQUEST_CODE_NEW_LOCATION) }
+        btnAdd.setOnClickListener {
+            MapActivity.startForResult(
+                this,
+                Constants.REQUEST_CODE_NEW_LOCATION
+            )
+        }
 
         initRecyclerView()
 

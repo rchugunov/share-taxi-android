@@ -1,4 +1,4 @@
-package com.github.rchugunov.weather
+package com.github.sharetaxi
 
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

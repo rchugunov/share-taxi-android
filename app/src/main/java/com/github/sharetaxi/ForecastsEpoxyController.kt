@@ -1,4 +1,4 @@
-package com.github.rchugunov.weather
+package com.github.sharetaxi
 
 import com.airbnb.epoxy.TypedEpoxyController
 

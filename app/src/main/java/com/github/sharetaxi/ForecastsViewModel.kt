@@ -1,4 +1,4 @@
-package com.github.rchugunov.weather
+package com.github.sharetaxi
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
@@ -24,7 +24,10 @@ class ForecastsViewModel(private val forecastRepository: ForecastRepository) : V
                     { err ->
                         Log.e(TAG, err.localizedMessage, err)
                         errorLoadingLiveData.value =
-                                ForecastsException.AddNewLocationException("Was not able to add coordinates", err)
+                                ForecastsException.AddNewLocationException(
+                                    "Was not able to add coordinates",
+                                    err
+                                )
                     })
         )
     }
@@ -39,7 +42,10 @@ class ForecastsViewModel(private val forecastRepository: ForecastRepository) : V
                     { err ->
                         Log.e(TAG, err.localizedMessage, err)
                         errorLoadingLiveData.value =
-                                ForecastsException.AddNewLocationException("Was not able to add coordinates", err)
+                                ForecastsException.AddNewLocationException(
+                                    "Was not able to add coordinates",
+                                    err
+                                )
                     })
         )
     }
