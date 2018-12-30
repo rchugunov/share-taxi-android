@@ -3,6 +3,7 @@ package com.github.rchugunov.weather
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -16,7 +17,7 @@ class MainActivity : AppCompatActivity() {
 
     private val btnAdd by lazy { findViewById<FloatingActionButton>(R.id.btn_add) }
     private val rvList by lazy { findViewById<EpoxyRecyclerView>(R.id.rv_forecast_data) }
-    private val vm by lazy { ViewModelProviders.of(this).get(ForecastsViewModel::class.java) }
+    private val vm by lazy { ViewModelProviders.of(this, ViewModelFactory(this)).get(ForecastsViewModel::class.java) }
     private val controller = ForecastsEpoxyController()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,6 +29,15 @@ class MainActivity : AppCompatActivity() {
         initRecyclerView()
 
         vm.forecastsHistoryLiveData.observe(this, Observer { list -> controller.setData(list) })
+        vm.errorLoadingLiveData.observe(this, Observer { err ->
+            when (err) {
+                is ForecastsException.AddNewLocationException -> Toast.makeText(
+                    this,
+                    "Could not add new location",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        })
 
         if (savedInstanceState == null) {
             vm.loadHistoryResults()
@@ -41,8 +51,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == Constants.REQUEST_CODE_NEW_LOCATION && resultCode == Activity.RESULT_OK) {
-            val location = data?.getParcelableExtra<LatLng>(Constants.LOCATION_DATA_EXTRA)
-            vm.addNewLocation(location)
+            val location = data?.getParcelableExtra<LatLng>(Constants.LOCATION_DATA_EXTRA) ?: return
+            vm.addNewLocation(Coordinates(location.latitude, location.longitude))
         }
     }
 }
