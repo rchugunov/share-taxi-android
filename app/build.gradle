@@ -39,17 +39,17 @@ android {
 
 dependencies {
     implementation 'com.android.support:multidex:1.0.3'
-    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     //appcompat
-    implementation "androidx.appcompat:appcompat:1.1.0-alpha01"
-    implementation "androidx.constraintlayout:constraintlayout:2.0.0-alpha3"
-    implementation "androidx.recyclerview:recyclerview:1.1.0-alpha01"
-    implementation "com.google.android.material:material:1.1.0-alpha02"
-    implementation "com.google.android.gms:play-services-maps:16.0.0"
-    implementation "android.arch.lifecycle:extensions:1.1.1"
+    implementation 'androidx.appcompat:appcompat:1.1.0-alpha01'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-alpha3'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0-alpha01'
+    implementation 'com.google.android.material:material:1.1.0-alpha02'
+    implementation 'com.google.android.gms:play-services-maps:16.0.0'
+    implementation 'android.arch.lifecycle:extensions:1.1.1'
     // epoxy
-    implementation "com.airbnb.android:epoxy:3.0.0"
-    implementation "com.airbnb.android:epoxy-databinding:3.0.0"
+    implementation 'com.airbnb.android:epoxy:3.0.0'
+    implementation 'com.airbnb.android:epoxy-databinding:3.0.0'
     kapt "com.airbnb.android:epoxy-processor:3.0.0"
     //rx
     implementation 'io.reactivex.rxjava2:rxjava:2.2.4'
@@ -61,10 +61,12 @@ dependencies {
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:3.8.0'
     //test
-    testImplementation "junit:junit:4.12"
-    androidTestImplementation "androidx.test:runner:1.1.1"
-    androidTestImplementation "androidx.test.espresso:espresso-core:3.1.1"
-
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test:runner:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
     //social
     implementation 'com.facebook.android:facebook-login:[4,5)'
+
+    implementation 'com.github.rchugunov:android-mvi-coroutines:1.0.0'
+    compile 'org.koin:koin-android-viewmodel:1.0.2'
 }

@@ -7,6 +7,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
+@Deprecated("don't use")
 class ForecastsViewModel(private val forecastRepository: ForecastRepository) : ViewModel() {
 
     val forecastsHistoryLiveData: MutableLiveData<List<Forecast>> = MutableLiveData()

@@ -17,9 +17,7 @@ class MainActivity : AppCompatActivity() {
 
     private val btnAdd by lazy { findViewById<FloatingActionButton>(R.id.btn_add) }
     private val rvList by lazy { findViewById<EpoxyRecyclerView>(R.id.rv_forecast_data) }
-    private val vm by lazy { ViewModelProviders.of(this,
-        ViewModelFactory(this)
-    ).get(ForecastsViewModel::class.java) }
+    private val vm by lazy { ViewModelProviders.of(this).get(ForecastsViewModel::class.java) }
     private val controller = ForecastsEpoxyController()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,6 +58,12 @@ class MainActivity : AppCompatActivity() {
         if (requestCode == Constants.REQUEST_CODE_NEW_LOCATION && resultCode == Activity.RESULT_OK) {
             val location = data?.getParcelableExtra<LatLng>(Constants.LOCATION_DATA_EXTRA) ?: return
             vm.addNewLocation(Coordinates(location.latitude, location.longitude))
+        }
+    }
+
+    companion object {
+        fun start(activity: Activity) {
+            activity.startActivity(Intent(activity, MainActivity::class.java))
         }
     }
 }
