@@ -2,6 +2,7 @@ package com.github.sharetaxi.koin
 
 import android.content.Context
 import com.github.sharetaxi.LoginViewModel
+import com.github.sharetaxi.RetrofitClient
 import com.github.sharetaxi.usecase.AuthRepository
 import com.github.sharetaxi.usecase.CheckAuthUsecase
 import com.github.sharetaxi.usecase.LoginViaFacebookUsecase
@@ -19,5 +20,9 @@ val usecaseModule = module {
 }
 
 val repoModule = module {
-    single { AuthRepository(androidContext().getSharedPreferences("auth", Context.MODE_PRIVATE)) }
+    single { AuthRepository(androidContext().getSharedPreferences("auth", Context.MODE_PRIVATE), get()) }
+}
+
+val appModule = module {
+    single { RetrofitClient }
 }

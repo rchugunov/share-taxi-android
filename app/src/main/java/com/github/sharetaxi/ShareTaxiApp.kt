@@ -1,6 +1,7 @@
 package com.github.sharetaxi
 
 import androidx.multidex.MultiDexApplication
+import com.github.sharetaxi.koin.appModule
 import com.github.sharetaxi.koin.repoModule
 import com.github.sharetaxi.koin.usecaseModule
 import com.github.sharetaxi.koin.viewModelModule
@@ -13,7 +14,8 @@ class ShareTaxiApp : MultiDexApplication() {
         startKoin(this, listOf(
             viewModelModule,
             usecaseModule,
-            repoModule
+            repoModule,
+            appModule
         ))
     }
 }

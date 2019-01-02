@@ -2,14 +2,21 @@ package com.github.sharetaxi.usecase
 
 import android.content.SharedPreferences
 import android.util.Log
+import com.github.sharetaxi.RetrofitClient
 import java.util.*
 
-class AuthRepository(private val authPrefs: SharedPreferences) {
+class AuthRepository(
+    private val authPrefs: SharedPreferences,
+    private val client: RetrofitClient
+) {
 
     fun checkAuth() = authPrefs.getString(AUTH_TOKEN, null) != null
-    fun login(userId: String, token: String, expires: Date): Boolean {
+
+    suspend fun login(userId: String, token: String, expires: Date): Boolean {
         Log.d(TAG, "User logged in $userId $token $expires")
-        return true
+        val rawResponse = client.authService.facebookLogin(token, userId, expires.time).await()
+        val body = rawResponse.body()
+        return body?.loggedIn ?: false
     }
 
     companion object {
