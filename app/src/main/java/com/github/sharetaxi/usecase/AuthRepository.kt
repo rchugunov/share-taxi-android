@@ -2,6 +2,7 @@ package com.github.sharetaxi.usecase
 
 import android.content.SharedPreferences
 import android.util.Log
+import com.github.sharetaxi.FacebookLoginRequest
 import com.github.sharetaxi.RetrofitClient
 import java.util.*
 
@@ -14,7 +15,7 @@ class AuthRepository(
 
     suspend fun login(userId: String, token: String, expires: Date): Boolean {
         Log.d(TAG, "User logged in $userId $token $expires")
-        val rawResponse = client.authService.facebookLogin(token, userId, expires.time).await()
+        val rawResponse = client.authService.facebookLogin(FacebookLoginRequest(token, userId)).await()
         val body = rawResponse.body()
         return body?.loggedIn ?: false
     }
