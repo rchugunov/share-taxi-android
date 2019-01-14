@@ -7,4 +7,6 @@
     <string name="address_found" />
     <string name="main_activity">Prometheus</string>
     <string name="facebook_login">Login with Facebook</string>
+    <string name="search_companion">Search companion</string>
+    <string name="settings">Settings</string>
 </resources>

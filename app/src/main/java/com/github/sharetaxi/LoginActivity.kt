@@ -46,7 +46,7 @@ class LoginActivity : AppCompatActivity() {
     private fun render(viewState: LoginViewState) {
         if (viewState.loggedIn) {
             finish()
-            MainActivity.start(this)
+            SearchCompanionsActivity.start(this)
         } else {
             btnFbLogin.visibility = View.VISIBLE
         }

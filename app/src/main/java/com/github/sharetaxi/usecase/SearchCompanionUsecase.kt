@@ -6,7 +6,7 @@ import com.github.sharetaxi.FacebookLoginRequest
 import com.github.sharetaxi.RetrofitClient
 import java.util.*
 
-class AuthRepository(
+class SearchCompanionUsecase(
     private val authPrefs: SharedPreferences,
     private val client: RetrofitClient
 ) {

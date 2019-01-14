@@ -11,10 +11,9 @@ object RetrofitClient {
         Retrofit.Builder()
             .addConverterFactory(MoshiConverterFactory.create())
             .addCallAdapterFactory(CoroutineCallAdapterFactory.invoke())
-            .baseUrl(Constants.BASE_URL)
+            .baseUrl(Constants.TEST_URL2)
             .build()
     }
 
-    val forecastsService by lazy { retrofit.create(ForecastsService::class.java) }
     val authService by lazy { retrofit.create(AuthService::class.java) }
 }
