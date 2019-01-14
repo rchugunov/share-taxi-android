@@ -11,7 +11,7 @@ object RetrofitClient {
         Retrofit.Builder()
             .addConverterFactory(MoshiConverterFactory.create())
             .addCallAdapterFactory(CoroutineCallAdapterFactory.invoke())
-            .baseUrl(Constants.TEST_URL2)
+            .baseUrl(Constants.BASE_URL)
             .build()
     }
 
