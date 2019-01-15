@@ -1,18 +1,17 @@
 package com.github.sharetaxi
 
 import android.content.SharedPreferences
-import io.reactivex.Observable
 
 
 interface LocalPrefs {
-    fun getCoordinates(): Observable<List<Coordinates>>
-    fun addCoordinates(coordinates: Coordinates): Observable<List<Coordinates>>
-    fun removeCoordinates(coordinates: Coordinates): Observable<List<Coordinates>>
+    suspend fun getCoordinates(): List<Coordinates>
+    suspend fun addCoordinates(coordinates: Coordinates): List<Coordinates>
+    suspend fun removeCoordinates(coordinates: Coordinates): List<Coordinates>
 
     class Impl(private val prefs: SharedPreferences) : LocalPrefs {
 //        private val gson = Gson()
 
-        override fun getCoordinates(): Observable<List<Coordinates>> = Observable.fromCallable {
+        override suspend fun getCoordinates(): List<Coordinates> {
             TODO()
 //            val jsonStr = prefs.getString(KEY_ALL_COORDS, null) ?: return@fromCallable emptyList<Coordinates>()
 //            return@fromCallable gson.fromJson<List<Coordinates>>(
@@ -21,7 +20,7 @@ interface LocalPrefs {
 //            )
         }
 
-        override fun addCoordinates(coordinates: Coordinates): Observable<List<Coordinates>> = Observable.fromCallable {
+        override suspend fun addCoordinates(coordinates: Coordinates): List<Coordinates> {
             TODO()
 //            val jsonStr = prefs.getString(KEY_ALL_COORDS, null)
 //            val values = jsonStr.let {
@@ -35,8 +34,7 @@ interface LocalPrefs {
 //            newValues
         }
 
-        override fun removeCoordinates(coordinates: Coordinates): Observable<List<Coordinates>> =
-            Observable.fromCallable {
+        override suspend fun removeCoordinates(coordinates: Coordinates): List<Coordinates>{
                 TODO()
 //            val jsonStr = prefs.getString(KEY_ALL_COORDS, null) ?: return@fromCallable emptyList<Coordinates>()
 //            val values = gson.fromJson<List<Coordinates>>(
