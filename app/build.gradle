@@ -7,6 +7,9 @@ apply plugin: "kotlin-kapt"
 apply plugin: "kotlin-android-extensions"
 
 android {
+    Properties properties = new Properties()
+    properties.load(rootProject.file('local.properties').newDataInputStream())
+
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.github.sharetaxi"
@@ -22,14 +25,21 @@ android {
     dataBinding {
         enabled = true
     }
+    signingConfigs {
+        release {
+            storeFile file("rchugunov.keystore")
+            storePassword properties.getProperty('kystore_pw')
+            keyAlias properties.getProperty('alias')
+            keyPassword properties.getProperty('key_pw')
+        }
+    }
     buildTypes {
-        Properties properties = new Properties()
-        properties.load(project.rootProject.file('local.properties').newDataInputStream())
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
             resValue "string", "facebook_app_id", properties.getProperty('facebook_app_id')
             resValue "string", "fb_login_protocol_scheme", properties.getProperty('fb_login_protocol_scheme')
+            signingConfig signingConfigs.release
         }
 
         debug {
