@@ -21,8 +21,18 @@ class ProfileViewModel : MviBaseViewModel<ProfileViewState, ProfileStateChanges>
     ): ProfileViewState {
         return previousState
     }
+
+    fun loadProfile() {
+
+    }
 }
 
-data class ProfileViewState(val email: String? = null) : MVIView.ViewState
+data class ProfileViewState(
+    val email: String? = null,
+    val hexBytesPhotoPreview: String? = null,
+    val photoPreviewUrl: String? = null,
+    val firstName: String? = null,
+    val secondName: String? = null
+) : MVIView.ViewState
 
 class ProfileStateChanges
