@@ -7,6 +7,9 @@ apply plugin: "kotlin-kapt"
 apply plugin: "kotlin-android-extensions"
 
 android {
+    Properties properties = new Properties()
+    properties.load(rootProject.file('local.properties').newDataInputStream())
+
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.github.sharetaxi"
@@ -22,14 +25,21 @@ android {
     dataBinding {
         enabled = true
     }
+    signingConfigs {
+        release {
+            storeFile file("rchugunov.keystore")
+            storePassword properties.getProperty('kystore_pw')
+            keyAlias properties.getProperty('alias')
+            keyPassword properties.getProperty('key_pw')
+        }
+    }
     buildTypes {
-        Properties properties = new Properties()
-        properties.load(project.rootProject.file('local.properties').newDataInputStream())
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
             resValue "string", "facebook_app_id", properties.getProperty('facebook_app_id')
             resValue "string", "fb_login_protocol_scheme", properties.getProperty('fb_login_protocol_scheme')
+            signingConfig signingConfigs.release
         }
 
         debug {
@@ -40,33 +50,17 @@ android {
 }
 
 dependencies {
+    implementation project(":profile")
+    implementation project(":general")
+
     implementation 'com.android.support:multidex:1.0.3'
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    //appcompat
-    implementation 'androidx.appcompat:appcompat:1.1.0-alpha01'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-alpha3'
-    implementation 'androidx.recyclerview:recyclerview:1.1.0-alpha01'
-    implementation 'com.google.android.material:material:1.1.0-alpha02'
-    implementation 'com.google.android.gms:play-services-maps:16.0.0'
-    implementation 'android.arch.lifecycle:extensions:1.1.1'
+
     // epoxy
     implementation 'com.airbnb.android:epoxy:3.0.0'
     implementation 'com.airbnb.android:epoxy-databinding:3.0.0'
-    kapt "com.airbnb.android:epoxy-processor:3.0.0"
-    //rx
-    implementation 'io.reactivex.rxjava2:rxjava:2.2.4'
-    implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
-    //retrofit
-    implementation 'com.squareup.retrofit2:retrofit:2.5.0'
-    implementation 'com.squareup.retrofit2:converter-moshi:2.5.0'
-    implementation 'com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2'
-    //test
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+
     //social
     implementation 'com.facebook.android:facebook-login:[4,5)'
 
-    implementation 'com.github.rchugunov:android-mvi-coroutines:1.0.0'
-    compile 'org.koin:koin-android-viewmodel:1.0.2'
+    implementation 'org.koin:koin-android-viewmodel:1.0.2'
 }
