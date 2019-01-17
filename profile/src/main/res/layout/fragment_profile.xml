@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
+    android:animateLayoutChanges="true"
     android:orientation="vertical">
 
     <de.hdodenhof.circleimageview.CircleImageView
@@ -25,7 +26,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_name"
         android:textSize="14sp"
-        android:fontFamily="sans-serif-medium"
+        app:fontFamily="sans-serif-medium"
         android:textColor="@color/texts_color"
         tools:text="chu.r@gmail.com"/>
 
@@ -39,7 +40,7 @@
         app:layout_constraintTop_toBottomOf="@id/iv_profile"
         android:textSize="18sp"
         android:layout_marginTop="20dp"
-        android:fontFamily="sans-serif-medium"
+        app:fontFamily="sans-serif-medium"
         android:textColor="@color/texts_color"
         tools:text="Roman Chugunov"/>
 
@@ -49,11 +50,25 @@
         android:layout_height="wrap_content"
         android:background="?selectableItemBackground"
         android:textColor="@color/red_text_color"
-        android:fontFamily="sans-serif-condensed-medium"
+        app:fontFamily="sans-serif-medium"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/progressbar"
         android:layout_marginBottom="20dp"
         android:text="@string/logout"/>
+
+    <me.zhanghai.android.materialprogressbar.MaterialProgressBar
+        android:id="@+id/progressbar"
+        style="@style/Widget.MaterialProgressBar.ProgressBar.Horizontal"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="-8dp"
+        android:layout_marginTop="-4dp"
+        android:indeterminate="true"
+        android:padding="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:mpb_progressStyle="horizontal" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

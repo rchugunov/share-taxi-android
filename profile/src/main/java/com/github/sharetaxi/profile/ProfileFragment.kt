@@ -2,24 +2,28 @@ package com.github.sharetaxi.profile
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import com.github.sharetaxi.profile.vm.ProfileViewModel
 import com.github.sharetaxi.profile.vm.ProfileViewState
 import com.squareup.picasso.Picasso
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import org.koin.android.ext.android.inject
 
+@ExperimentalCoroutinesApi
 internal class ProfileFragment : Fragment() {
 
     private val ivProfile by lazy { view!!.findViewById<ImageView>(R.id.iv_profile) }
     private val tvFirstLastName by lazy { view!!.findViewById<TextView>(R.id.tv_name) }
     private val tvEmail by lazy { view!!.findViewById<TextView>(R.id.tv_email) }
-    private val vm by lazy { ViewModelProviders.of(this).get(ProfileViewModel::class.java) }
+    private val btnLogout by lazy { view!!.findViewById<Button>(R.id.btn_logout) }
+    private val progressbar by lazy { view!!.findViewById<ProgressBar>(R.id.progressbar) }
+    private val vm by inject<ProfileViewModel>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_profile, container, false)
@@ -29,17 +33,27 @@ internal class ProfileFragment : Fragment() {
         ivProfile.setImageResource(R.drawable.ic_mtrl_chip_checked_circle)
         vm.viewState.observe(this, Observer { render(it) })
         vm.loadProfile()
+
+        btnLogout.setOnClickListener { vm.logout() }
     }
 
     private fun render(viewState: ProfileViewState) {
-        tvEmail.text = viewState.email
-        if (viewState.firstName != null && viewState.secondName != null) {
+        btnLogout.visibility = if (viewState.user != null) View.VISIBLE else View.GONE
+        progressbar.visibility = if (viewState.isUserProfileLoading) View.VISIBLE else View.GONE
+
+        tvEmail.text = viewState.user?.email
+        if (viewState.user?.firstName != null && viewState.user.secondName != null) {
             @SuppressLint("SetTextI18n")
-            tvFirstLastName.text = "${viewState.firstName} ${viewState.secondName}"
+            tvFirstLastName.text = "${viewState.user.firstName} ${viewState.user.secondName}"
         }
 
-        viewState.photoPreviewUrl?.apply {
-            Picasso.get().load(viewState.photoPreviewUrl).into(ivProfile)
+        viewState.user?.photoPreviewUrl?.apply {
+            Picasso.get().load(viewState.user.photoPreviewUrl).into(ivProfile)
+        }
+
+        viewState.userProfileException?.apply {
+            Toast.makeText(requireActivity(), this.message ?: "Something was wrong", Toast.LENGTH_SHORT).show()
+            Log.e(TAG, this.message, this)
         }
     }
 

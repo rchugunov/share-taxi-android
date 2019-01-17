@@ -19,8 +19,6 @@ android {
         versionName "1.0.2"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
-        buildConfigField "String", "BASE_URL", "\"http://sharetaxi.roman-chugunov.ru/api\""
-        buildConfigField "String", "API_VERSION", "\"v1\""
     }
     dataBinding {
         enabled = true
@@ -61,6 +59,4 @@ dependencies {
 
     //social
     implementation 'com.facebook.android:facebook-login:[4,5)'
-
-    implementation 'org.koin:koin-android-viewmodel:1.0.2'
 }

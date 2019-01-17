@@ -7,6 +7,7 @@ import android.location.Geocoder
 import android.os.Bundle
 import android.os.ResultReceiver
 import android.util.Log
+import com.github.sharetaxi.general.Constants
 import com.google.android.gms.maps.model.LatLng
 import java.io.IOException
 import java.util.*

@@ -2,8 +2,8 @@ package com.github.sharetaxi.usecase
 
 import android.content.SharedPreferences
 import android.util.Log
-import com.github.sharetaxi.FacebookLoginRequest
-import com.github.sharetaxi.RetrofitClient
+import com.github.sharetaxi.general.web.RetrofitClient
+import com.github.sharetaxi.general.web.request.FacebookLoginRequest
 import java.util.*
 
 class SearchCompanionUsecase(
@@ -15,7 +15,12 @@ class SearchCompanionUsecase(
 
     suspend fun login(userId: String, token: String, expires: Date): Boolean {
         Log.d(TAG, "User logged in $userId $token $expires")
-        val rawResponse = client.authService.facebookLogin(FacebookLoginRequest(token, userId)).await()
+        val rawResponse = client.authService.facebookLogin(
+            FacebookLoginRequest(
+                token,
+                userId
+            )
+        ).await()
         val body = rawResponse.body()
 
         body?.token?.apply {
