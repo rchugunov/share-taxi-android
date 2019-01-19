@@ -17,5 +17,5 @@ val usecaseModule = module {
 }
 
 val appModule = module {
-    single<String>("BASE_URL") { Constants.TEST_URL }
+    single<String>("BASE_URL") { Constants.BASE_URL }
 }
