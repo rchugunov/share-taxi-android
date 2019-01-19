@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import com.github.sharetaxi.general.LogoutCallback
 import com.github.sharetaxi.profile.vm.ProfileViewModel
 import com.github.sharetaxi.profile.vm.ProfileViewState
 import com.squareup.picasso.Picasso
@@ -38,7 +39,15 @@ internal class ProfileFragment : Fragment() {
     }
 
     private fun render(viewState: ProfileViewState) {
-        btnLogout.visibility = if (viewState.user != null) View.VISIBLE else View.GONE
+//        btnLogout.visibility = if (viewState.user != null) View.VISIBLE else View.GONE
+
+        if (viewState.loggedOut) {
+            if (activity is LogoutCallback) {
+                (activity as LogoutCallback).logout()
+            }
+            return
+        }
+
         progressbar.visibility = if (viewState.isUserProfileLoading) View.VISIBLE else View.GONE
 
         tvEmail.text = viewState.user?.email
@@ -47,8 +56,10 @@ internal class ProfileFragment : Fragment() {
             tvFirstLastName.text = "${viewState.user.firstName} ${viewState.user.secondName}"
         }
 
-        viewState.user?.photoPreviewUrl?.apply {
-            Picasso.get().load(viewState.user.photoPreviewUrl).into(ivProfile)
+        viewState.user?.photoUrl?.apply {
+            if (!isBlank()) {
+                Picasso.get().load(this).into(ivProfile)
+            }
         }
 
         viewState.userProfileException?.apply {

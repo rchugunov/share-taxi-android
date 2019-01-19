@@ -1,9 +1,11 @@
 package com.github.sharetaxi.general.model
 
+import com.google.gson.annotations.SerializedName
+
 data class UserProfile(
     val email: String? = null,
-    val hexBytesPhotoPreview: String? = null,
-    val photoPreviewUrl: String? = null,
-    val firstName: String? = null,
-    val secondName: String? = null
+    @SerializedName("photo_preview_hex") val hexBytesPhotoPreview: String? = null,
+    @SerializedName("photo_url") val photoUrl: String? = null,
+    @SerializedName("first_name") val firstName: String? = null,
+    @SerializedName("last_name") val secondName: String? = null
 )

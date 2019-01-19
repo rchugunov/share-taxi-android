@@ -24,7 +24,7 @@ private val repoModule = module {
 }
 
 private val webModule = module {
-    single { RetrofitClient }
+    single { RetrofitClient(get<String>("BASE_URL")) }
 }
 
 val GENERAL_KOIN_MODULES = arrayOf(repoModule, webModule)
