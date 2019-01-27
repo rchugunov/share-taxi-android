@@ -10,7 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
-import androidx.constraintlayout.widget.Group
+import androidx.cardview.widget.CardView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -28,7 +28,7 @@ import com.google.android.gms.maps.model.LatLngBounds
 class MapRootFragment : Fragment(), GoogleMapContainer.Callback {
 
     private val tvLocation by lazy { view!!.findViewById<TextView>(R.id.tv_location) }
-    private val groupBottomBar by lazy { view!!.findViewById<Group>(R.id.group_bottom_bar) }
+    private val groupBottomBar by lazy { view!!.findViewById<CardView>(R.id.bottom_bar_card_view) }
 
     private val mapContainer by lazy { GoogleMapContainer(childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment) }
 
@@ -58,10 +58,13 @@ class MapRootFragment : Fragment(), GoogleMapContainer.Callback {
     }
 
     private fun placeSelectedFromSearchFragment(place: Place) {
-        tvLocation.text = place.address
-        groupBottomBar.visibility = if (place.address == null) View.GONE else View.VISIBLE
-
+        updateSelectedPlace(place.address)
         mapContainer.placeSelected(place.latLng)
+    }
+
+    private fun updateSelectedPlace(address: CharSequence?) {
+        tvLocation.text = address
+        groupBottomBar.visibility = if (address == null) View.GONE else View.VISIBLE
     }
 
     private fun placeNotFoundFromSearchFragment(status: Status?) {
@@ -113,7 +116,7 @@ class MapRootFragment : Fragment(), GoogleMapContainer.Callback {
     override fun mapBoundsChanged(newBounds: LatLngBounds) = searchFragment.setBoundsBias(newBounds)
 
     private fun runGeocodingService(latLng: LatLng) {
-        tvLocation.visibility = View.GONE
+        groupBottomBar.visibility = View.GONE
         val intent = Intent(activity!!, GeocodingService::class.java).apply {
             putExtra(Constants.RECEIVER, resultReceiver)
             putExtra(Constants.LOCATION_DATA_EXTRA, latLng)
@@ -125,8 +128,7 @@ class MapRootFragment : Fragment(), GoogleMapContainer.Callback {
 
         override fun onReceiveResult(resultCode: Int, resultData: Bundle?) {
             val addressOutput = resultData?.getString(Constants.RESULT_DATA_KEY)
-            tvLocation.text = addressOutput
-            tvLocation.visibility = if (addressOutput == null) View.GONE else View.VISIBLE
+            updateSelectedPlace(addressOutput)
         }
     }
 

@@ -30,13 +30,10 @@ class GoogleMapContainer(private val mapFragment: SupportMapFragment) {
     fun setup(callback: Callback? = null) {
         this.callback = callback
         mapAccessor.map {
-            setPadding(0, 200, 0, 0)
 
-            uiSettings.isMapToolbarEnabled = true
-            uiSettings.isZoomControlsEnabled = true
-            uiSettings.isRotateGesturesEnabled = false
-            uiSettings.isRotateGesturesEnabled = true
-            uiSettings.isMyLocationButtonEnabled = true
+//            uiSettings.isMapToolbarEnabled = true
+            uiSettings.setAllGesturesEnabled(true)
+//            uiSettings.isMyLocationButtonEnabled = true
 
             setOnMapClickListener { latLng ->
                 if (marker == null) {
@@ -68,10 +65,10 @@ class GoogleMapContainer(private val mapFragment: SupportMapFragment) {
                         animateCamera(CameraUpdateFactory.newLatLngZoom(LatLng(it.latitude, it.longitude), 16f))
                     }
                 }
-                uiSettings.isMyLocationButtonEnabled = true
+//                uiSettings.isMyLocationButtonEnabled = true
             } else {
                 isMyLocationEnabled = false
-                uiSettings.isMyLocationButtonEnabled = false
+//                uiSettings.isMyLocationButtonEnabled = false
                 callback?.getLocationPermission()
             }
         } catch (e: SecurityException) {
