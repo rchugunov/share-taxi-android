@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "274924690732",
+    "firebase_url": "https://commanding-pier-206417.firebaseio.com",
+    "project_id": "commanding-pier-206417",
+    "storage_bucket": "commanding-pier-206417.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:274924690732:android:994c2fee6ef29137",
+        "android_client_info": {
+          "package_name": "com.github.sharetaxi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "274924690732-o6moj45fappolvgno0vflea1m0v5u6q4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.github.sharetaxi",
+            "certificate_hash": "bfe9fdcbde73bcd8e045f7b85853b12e3d58afdd"
+          }
+        },
+        {
+          "client_id": "274924690732-qk1rhkaug8iv5hg3h4pahbd24ih63qju.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDTr0J2-au8Lye4WFgp_nAjgmGFNTHgXDw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "274924690732-qk1rhkaug8iv5hg3h4pahbd24ih63qju.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

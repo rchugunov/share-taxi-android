@@ -1,5 +1,6 @@
 package com.github.sharetaxi.koin
 
+import com.github.sharetaxi.BuildConfig
 import com.github.sharetaxi.LoginViewModel
 import com.github.sharetaxi.general.Constants
 import com.github.sharetaxi.usecase.CheckAuthUsecase
@@ -17,5 +18,5 @@ val usecaseModule = module {
 }
 
 val appModule = module {
-    single<String>("BASE_URL") { Constants.BASE_URL }
+    single<String>("BASE_URL") { if (BuildConfig.DEBUG) Constants.TEST_URL else Constants.BASE_URL }
 }
