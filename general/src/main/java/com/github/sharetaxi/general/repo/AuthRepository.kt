@@ -3,7 +3,9 @@ package com.github.sharetaxi.general.repo
 import android.util.Log
 import com.github.sharetaxi.general.local.AuthLocalDataSource
 import com.github.sharetaxi.general.web.request.FacebookLoginRequest
+import com.github.sharetaxi.general.web.response.AuthResponse
 import com.github.sharetaxi.general.web.services.AuthService
+import retrofit2.Response
 import java.util.*
 
 class AuthRepository(
@@ -15,12 +17,14 @@ class AuthRepository(
 
     suspend fun login(userId: String, token: String, expires: Date): Boolean {
         Log.d(TAG, "User logged in $userId $token $expires")
-        val rawResponse = authService.facebookLogin(
-            FacebookLoginRequest(
-                token,
-                userId
-            )
-        ).await()
+        val rawResponse: Response<AuthResponse>
+        try {
+            rawResponse = authService.facebookLogin(
+                FacebookLoginRequest(token, userId)
+            ).await()
+        } catch (e: Exception) {
+            return false
+        }
         val body = rawResponse.body()
 
         body?.token?.apply { authLocal.saveToken(this) }
