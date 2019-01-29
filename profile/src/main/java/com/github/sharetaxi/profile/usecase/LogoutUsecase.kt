@@ -1,5 +1,6 @@
 package com.github.sharetaxi.profile.usecase
 
+import com.facebook.login.LoginManager
 import com.github.sharetaxi.general.repo.AuthRepository
 import com.github.sharetaxi.profile.vm.ProfileStateChanges
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -13,6 +14,7 @@ internal class LogoutUsecase(private val authRepository: AuthRepository) {
         channel.send(LogoutStateChanges.Started)
         try {
             authRepository.logout()
+            LoginManager.getInstance().logOut()
             channel.send(LogoutStateChanges.Success)
         } catch (exc: java.lang.Exception) {
             channel.send(LogoutStateChanges.Error(exc))

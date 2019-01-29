@@ -29,6 +29,8 @@ dependencies {
     api 'com.squareup.picasso:picasso:2.71828'
     api 'org.koin:koin-android-viewmodel:1.0.2'
     api 'me.zhanghai.android.materialprogressbar:library:1.6.1'
+    api 'com.facebook.android:facebook-core:[4,5)'
+    api 'com.facebook.android:facebook-common:[4,5)'
 
     // Appcompat
     api 'androidx.appcompat:appcompat:1.1.0-alpha01'

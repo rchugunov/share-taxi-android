@@ -33,7 +33,9 @@ class GoogleMapContainer(private val mapFragment: SupportMapFragment) {
 
 //            uiSettings.isMapToolbarEnabled = true
             uiSettings.setAllGesturesEnabled(true)
-//            uiSettings.isMyLocationButtonEnabled = true
+            uiSettings.isMyLocationButtonEnabled = false
+            uiSettings.isCompassEnabled = false
+            uiSettings.isMapToolbarEnabled = false
 
             setOnMapClickListener { latLng ->
                 if (marker == null) {
@@ -94,6 +96,10 @@ class GoogleMapContainer(private val mapFragment: SupportMapFragment) {
         if (isPermitted) {
             map { updateMyLocationUI(true) }
         }
+    }
+
+    fun clear() {
+        
     }
 
     private class MapAccessor(private val mapFragment: SupportMapFragment) {

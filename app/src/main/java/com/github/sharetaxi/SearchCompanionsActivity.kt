@@ -22,6 +22,9 @@ class SearchCompanionsActivity : AppCompatActivity(), BottomNavigationView.OnNav
         setContentView(R.layout.activity_search_companions)
         btmNavigation.setOnNavigationItemSelectedListener(this)
         btmNavigation.selectedItemId = R.id.btn_map
+        supportFragmentManager.beginTransaction().add(R.id.container, profileFragment).commit()
+        supportFragmentManager.beginTransaction().add(R.id.container, mapFragment).commit()
+        supportFragmentManager.beginTransaction().hide(profileFragment).commit()
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
@@ -34,7 +37,9 @@ class SearchCompanionsActivity : AppCompatActivity(), BottomNavigationView.OnNav
     }
 
     private fun setFragment(fragment: Fragment) {
-        supportFragmentManager.beginTransaction().replace(R.id.container, fragment).commit()
+        val existingFragment = supportFragmentManager.findFragmentById(R.id.container)
+        existingFragment?.apply { supportFragmentManager.beginTransaction().hide(this).commit() }
+        supportFragmentManager.beginTransaction().show(fragment).commit()
     }
 
     override fun logout() {
