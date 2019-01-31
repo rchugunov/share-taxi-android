@@ -11,7 +11,6 @@ import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.cardview.widget.CardView
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.github.sharetaxi.general.Constants
@@ -87,8 +86,7 @@ class MapRootFragment : Fragment(), GoogleMapContainer.Callback {
         ) {
             mapContainer.permissionGranted(true)
         } else {
-            ActivityCompat.requestPermissions(
-                requireActivity(),
+            requestPermissions(
                 arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),
                 PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION
             )

@@ -23,6 +23,7 @@ class AuthRepository(
                 FacebookLoginRequest(token, userId)
             ).await()
         } catch (e: Exception) {
+            Log.e(TAG, e.message, e)
             return false
         }
         val body = rawResponse.body()
