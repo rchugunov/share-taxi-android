@@ -15,7 +15,7 @@ class AuthRepository(
 
     fun checkAuth() = authLocal.getToken() != null
 
-    suspend fun login(userId: String, token: String, expires: Date): Boolean {
+    suspend fun login(userId: String, token: String, expires: Date): Pair<Boolean, Exception?> {
         Log.d(TAG, "User logged in $userId $token $expires")
         val rawResponse: Response<AuthResponse>
         try {
@@ -23,8 +23,7 @@ class AuthRepository(
                 FacebookLoginRequest(token, userId)
             ).await()
         } catch (e: Exception) {
-            Log.e(TAG, e.message, e)
-            return false
+            return Pair(false, e)
         }
         val body = rawResponse.body()
 
@@ -32,7 +31,7 @@ class AuthRepository(
 
         body?.user?.apply { authLocal.saveUserId(this.id) }
 
-        return body?.token != null
+        return Pair(body?.token != null, null)
     }
 
     fun logout() = authLocal.logout()

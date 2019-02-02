@@ -29,6 +29,15 @@ class MapRootFragment : Fragment(), GoogleMapContainer.Callback {
     private val tvLocation by lazy { view!!.findViewById<TextView>(R.id.tv_location) }
     private val groupBottomBar by lazy { view!!.findViewById<CardView>(R.id.bottom_bar_card_view) }
 
+    private val btnFrom by lazy { view!!.findViewById<View>(R.id.btn_from) }
+    private val btnTo by lazy { view!!.findViewById<View>(R.id.btn_to) }
+
+    private val btnClear by lazy { view!!.findViewById<View>(R.id.btn_clear) }
+    private val btnBuildRoute by lazy { view!!.findViewById<View>(R.id.btn_build_route) }
+
+    private val tvFrom by lazy { view!!.findViewById<TextView>(R.id.tv_from) }
+    private val tvTo by lazy { view!!.findViewById<TextView>(R.id.tv_to) }
+
     private val mapContainer by lazy { GoogleMapContainer(childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment) }
 
     private val searchFragment by lazy {
@@ -53,7 +62,41 @@ class MapRootFragment : Fragment(), GoogleMapContainer.Callback {
 
         mapContainer.setup(this)
 
+        btnFrom.setOnClickListener {
+            tvFrom.text = tvLocation.text
+            if (tvFrom.text == tvTo.text) {
+                tvTo.text = null
+            }
+            checkIfReadyToBuildRoute()
+        }
+        btnTo.setOnClickListener {
+            tvTo.text = tvLocation.text
+            if (tvFrom.text == tvTo.text) {
+                tvFrom.text = null
+            }
+            checkIfReadyToBuildRoute()
+        }
+
+        btnClear.setOnClickListener {
+            tvTo.text = null
+            tvFrom.text = null
+            btnClear.visibility = View.GONE
+            btnBuildRoute.visibility = View.GONE
+        }
+        btnBuildRoute.setOnClickListener {
+            //            vm.go()
+        }
+
         getLocationPermission()
+    }
+
+    private fun checkIfReadyToBuildRoute() {
+        if (tvFrom.text.isNotEmpty() && tvTo.text.isNotEmpty()) {
+            mapContainer.showRoute()
+            groupBottomBar.visibility = View.GONE
+            btnClear.visibility = View.VISIBLE
+            btnBuildRoute.visibility = View.VISIBLE
+        }
     }
 
     private fun placeSelectedFromSearchFragment(place: Place) {
