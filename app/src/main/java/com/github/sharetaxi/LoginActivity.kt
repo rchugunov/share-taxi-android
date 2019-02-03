@@ -11,6 +11,7 @@ import com.facebook.FacebookCallback
 import com.facebook.FacebookException
 import com.facebook.login.LoginResult
 import com.facebook.login.widget.LoginButton
+import com.github.sharetaxi.general.ext.toCrashlytics
 import com.google.android.material.snackbar.Snackbar
 import org.koin.android.ext.android.inject
 
@@ -60,6 +61,7 @@ class LoginActivity : AppCompatActivity() {
         }
 
         if (viewState.error != null) {
+            viewState.error.toCrashlytics()
             Snackbar.make(btnFbLogin, viewState.error.message!!, Snackbar.LENGTH_SHORT).show()
         }
     }
