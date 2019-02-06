@@ -4,17 +4,19 @@ import com.github.sharetaxi.BuildConfig
 import com.github.sharetaxi.LoginViewModel
 import com.github.sharetaxi.general.Constants
 import com.github.sharetaxi.usecase.CheckAuthUsecase
+import com.github.sharetaxi.usecase.LoginUsecase
 import com.github.sharetaxi.usecase.LoginViaFacebookUsecase
 import org.koin.android.viewmodel.ext.koin.viewModel
 import org.koin.dsl.module.module
 
 val viewModelModule = module {
-    viewModel { LoginViewModel(get<CheckAuthUsecase>(), get<LoginViaFacebookUsecase>()) }
+    viewModel { LoginViewModel(get<CheckAuthUsecase>(), get<LoginViaFacebookUsecase>(), get<LoginUsecase>()) }
 }
 
 val usecaseModule = module {
     single { LoginViaFacebookUsecase(get()) }
     single { CheckAuthUsecase(get()) }
+    single { LoginUsecase(get()) }
 }
 
 val appModule = module {
