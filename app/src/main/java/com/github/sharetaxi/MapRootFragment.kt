@@ -8,13 +8,12 @@ import android.os.ResultReceiver
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import android.widget.Toast
-import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.github.sharetaxi.general.Constants
 import com.github.sharetaxi.map.GoogleMapContainer
+import com.github.sharetaxi.map.vm.MapViewModel
 import com.google.android.gms.common.api.Status
 import com.google.android.gms.location.places.Place
 import com.google.android.gms.location.places.ui.PlaceSelectionListener
@@ -22,21 +21,11 @@ import com.google.android.gms.location.places.ui.SupportPlaceAutocompleteFragmen
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
+import kotlinx.android.synthetic.main.fragment_root_map.*
+import org.koin.android.ext.android.inject
 
 
 class MapRootFragment : Fragment(), GoogleMapContainer.Callback {
-
-    private val tvLocation by lazy { view!!.findViewById<TextView>(R.id.tv_location) }
-    private val groupBottomBar by lazy { view!!.findViewById<CardView>(R.id.bottom_bar_card_view) }
-
-    private val btnFrom by lazy { view!!.findViewById<View>(R.id.btn_from) }
-    private val btnTo by lazy { view!!.findViewById<View>(R.id.btn_to) }
-
-    private val btnClear by lazy { view!!.findViewById<View>(R.id.btn_clear) }
-    private val btnBuildRoute by lazy { view!!.findViewById<View>(R.id.btn_build_route) }
-
-    private val tvFrom by lazy { view!!.findViewById<TextView>(R.id.tv_from) }
-    private val tvTo by lazy { view!!.findViewById<TextView>(R.id.tv_to) }
 
     private val mapContainer by lazy { GoogleMapContainer(childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment) }
 
@@ -45,6 +34,7 @@ class MapRootFragment : Fragment(), GoogleMapContainer.Callback {
     }
 
     private lateinit var resultReceiver: AddressResultReceiver
+    private val vm by inject<MapViewModel>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
         inflater.inflate(R.layout.fragment_root_map, container, false)
@@ -63,6 +53,7 @@ class MapRootFragment : Fragment(), GoogleMapContainer.Callback {
         mapContainer.setup(this)
 
         btnFrom.setOnClickListener {
+            mapContainer.selection()?.apply { vm.placeFromSelected(this) }
             tvFrom.text = tvLocation.text
             if (tvFrom.text == tvTo.text) {
                 tvTo.text = null
@@ -70,6 +61,7 @@ class MapRootFragment : Fragment(), GoogleMapContainer.Callback {
             checkIfReadyToBuildRoute()
         }
         btnTo.setOnClickListener {
+            mapContainer.selection()?.apply { vm.placeToSelected(this) }
             tvTo.text = tvLocation.text
             if (tvFrom.text == tvTo.text) {
                 tvFrom.text = null
@@ -83,9 +75,7 @@ class MapRootFragment : Fragment(), GoogleMapContainer.Callback {
             btnClear.visibility = View.GONE
             btnBuildRoute.visibility = View.GONE
         }
-        btnBuildRoute.setOnClickListener {
-            //            vm.go()
-        }
+        btnBuildRoute.setOnClickListener { vm.performSearch() }
 
         getLocationPermission()
     }
@@ -93,7 +83,7 @@ class MapRootFragment : Fragment(), GoogleMapContainer.Callback {
     private fun checkIfReadyToBuildRoute() {
         if (tvFrom.text.isNotEmpty() && tvTo.text.isNotEmpty()) {
             mapContainer.showRoute()
-            groupBottomBar.visibility = View.GONE
+            bottomBarCardView.visibility = View.GONE
             btnClear.visibility = View.VISIBLE
             btnBuildRoute.visibility = View.VISIBLE
         }
@@ -106,7 +96,7 @@ class MapRootFragment : Fragment(), GoogleMapContainer.Callback {
 
     private fun updateSelectedPlace(address: CharSequence?) {
         tvLocation.text = address
-        groupBottomBar.visibility = if (address == null) View.GONE else View.VISIBLE
+        bottomBarCardView.visibility = if (address == null) View.GONE else View.VISIBLE
     }
 
     private fun placeNotFoundFromSearchFragment(status: Status?) {
@@ -156,7 +146,7 @@ class MapRootFragment : Fragment(), GoogleMapContainer.Callback {
     override fun mapBoundsChanged(newBounds: LatLngBounds) = searchFragment.setBoundsBias(newBounds)
 
     private fun runGeocodingService(latLng: LatLng) {
-        groupBottomBar.visibility = View.GONE
+        bottomBarCardView.visibility = View.GONE
         val intent = Intent(activity!!, GeocodingService::class.java).apply {
             putExtra(Constants.RECEIVER, resultReceiver)
             putExtra(Constants.LOCATION_DATA_EXTRA, latLng)

@@ -3,6 +3,7 @@ package com.github.sharetaxi.general
 import android.content.Context
 import com.github.sharetaxi.general.local.AuthLocalDataSource
 import com.github.sharetaxi.general.repo.AuthRepository
+import com.github.sharetaxi.general.repo.SearchRepository
 import com.github.sharetaxi.general.repo.UserRepository
 import com.github.sharetaxi.general.web.RetrofitClient
 import org.koin.android.ext.koin.androidContext
@@ -14,6 +15,10 @@ private val repoModule = module {
 
     single {
         UserRepository(userService = get<RetrofitClient>().userService, authLocal = get())
+    }
+
+    single {
+        SearchRepository()
     }
 
     single {

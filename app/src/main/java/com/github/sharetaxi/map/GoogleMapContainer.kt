@@ -106,6 +106,8 @@ class GoogleMapContainer(private val mapFragment: SupportMapFragment) {
 
     }
 
+    fun selection() = marker?.position
+
     private class MapAccessor(private val mapFragment: SupportMapFragment) {
         private var map: GoogleMap? = null
 
