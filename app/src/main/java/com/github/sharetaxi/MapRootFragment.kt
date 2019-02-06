@@ -81,8 +81,7 @@ class MapRootFragment : Fragment(), GoogleMapContainer.Callback {
         if (ContextCompat.checkSelfPermission(
                 requireContext().applicationContext,
                 android.Manifest.permission.ACCESS_FINE_LOCATION
-            )
-            == PackageManager.PERMISSION_GRANTED
+            ) == PackageManager.PERMISSION_GRANTED
         ) {
             mapContainer.permissionGranted(true)
         } else {

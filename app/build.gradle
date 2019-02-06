@@ -25,26 +25,17 @@ android {
     dataBinding {
         enabled = true
     }
-    signingConfigs {
-        release {
-            storeFile file("rchugunov.keystore")
-            storePassword properties.getProperty('kystore_pw')
-            keyAlias properties.getProperty('alias')
-            keyPassword properties.getProperty('key_pw')
-        }
-    }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
-            resValue "string", "facebook_app_id", properties.getProperty('facebook_app_id')
-            resValue "string", "fb_login_protocol_scheme", properties.getProperty('fb_login_protocol_scheme')
-//            signingConfig signingConfigs.release
+            resValue "string", "facebook_app_id", properties.getProperty('facebook_app_id', "")
+            resValue "string", "fb_login_protocol_scheme", properties.getProperty('fb_login_protocol_scheme', "")
         }
 
         debug {
-            resValue "string", "facebook_app_id", properties.getProperty('facebook_app_id')
-            resValue "string", "fb_login_protocol_scheme", properties.getProperty('fb_login_protocol_scheme')
+            resValue "string", "facebook_app_id", properties.getProperty('facebook_app_id', "")
+            resValue "string", "fb_login_protocol_scheme", properties.getProperty('fb_login_protocol_scheme', "")
         }
     }
 }

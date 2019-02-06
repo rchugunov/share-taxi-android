@@ -80,15 +80,15 @@
         android:id="@+id/bottom_bar_card_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:backgroundTint="#88ffffff"
         android:layout_margin="20dp"
         android:background="#88ffffff"
-        app:cardCornerRadius="4dp"
+        android:backgroundTint="#88ffffff"
         android:elevation="1dp"
         android:visibility="gone"
-        app:layout_constraintHeight_default="wrap"
+        app:cardCornerRadius="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_default="wrap"
         app:layout_constraintStart_toStartOf="parent">
 
         <LinearLayout
